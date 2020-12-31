@@ -1,5 +1,5 @@
 # 16-bits
-Code for 16 bits channel 
+Code for the channel 16 bits 
 
 ## Hello World
 Is expected the following behaviors
