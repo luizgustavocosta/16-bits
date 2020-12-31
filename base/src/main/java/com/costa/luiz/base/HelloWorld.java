@@ -21,7 +21,7 @@ public class HelloWorld {
                 printUsingLog(name);
                 break;
             default:
-                throw new IllegalArgumentException(printOption +" not availble, use system or log instead");
+                throw new IllegalArgumentException(printOption +" not available, use system or log instead");
         }
     }
 
@@ -32,6 +32,6 @@ public class HelloWorld {
     }
 
     public static void printUsingSystem(String name) {
-        System.out.println("Hello World "+name+" at "+ LocalDateTime.now());
+        System.out.print("Hello World "+name+" at "+ LocalDateTime.now()+"\n");
     }
 }

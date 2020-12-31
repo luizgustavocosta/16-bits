@@ -19,6 +19,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
+    <modules>
+        <module>base</module>
+        <module>quarkus</module>
+        <module>spring</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -48,7 +54,6 @@
                 <configuration>
                     <includes>
                         <include>**Test.java</include>
-                        <include>**Should.java</include>
                     </includes>
                 </configuration>
                 <dependencies>
