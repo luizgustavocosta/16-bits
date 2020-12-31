@@ -38,7 +38,7 @@ cURL runs on terminal, so open the terminal and execute the following code
 
 ### Browser
 
-Using the browser, just type ``http://localhost:8090/api/spring/helloworld/16bits``
+Using the browser, just type ``http://localhost:8080/api/quarkus/helloworld/nero``
 
 ![](src/main/resources/helloworld/browser.png)
  
