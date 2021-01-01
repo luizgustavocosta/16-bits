@@ -7,11 +7,12 @@
     <parent>
         <groupId>com.16bits</groupId>
         <artifactId>code</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>base</artifactId>
     <packaging>jar</packaging>
+    <name>base-only-java</name>
 
     <properties>
         <maven.assembly.plugin.version>3.1.1</maven.assembly.plugin.version>
@@ -26,31 +27,26 @@
         <dependency>
             <groupId>com.github.stefanbirkner</groupId>
             <artifactId>system-lambda</artifactId>
-            <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
             <artifactId>logcaptor</artifactId>
-            <version>2.3.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.11.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
         </dependency>
         <!-- Runtime-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
         </dependency>
     </dependencies>
 
