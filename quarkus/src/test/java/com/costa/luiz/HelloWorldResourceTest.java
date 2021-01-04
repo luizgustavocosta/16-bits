@@ -1,6 +1,7 @@
 package com.costa.luiz;
 
 import io.quarkus.test.junit.QuarkusTest;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +15,11 @@ class HelloWorldResourceTest {
     @DisplayName("Say hello world")
     void sayHello() {
         String nameExpected = "Luiz";
-        given()
-                .when()
-                .get("/api/quarkus/helloworld/"+nameExpected)
+        String paramName = "name";
+        given().pathParam(paramName, nameExpected)
+                .when().get("/api/quarkus/helloworld/{"+paramName+"}")
                 .then()
-                .statusCode(200)
-                .body(containsString("Hello "+nameExpected+" from Quarkus at "));
+                .statusCode(HttpStatus.SC_OK)
+                .body(containsString("Quarkus saying 'Hello to " + nameExpected + "', from"));
     }
 }
