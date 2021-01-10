@@ -21,7 +21,7 @@ public class HelloWorld {
                 printUsingLog(name);
                 break;
             default:
-                throw new IllegalArgumentException(printOption +" not available, use system or log instead");
+                throw new IllegalArgumentException(printOption +" not available. Please, use system or log instead");
         }
     }
 
