@@ -41,4 +41,20 @@ cURL runs on terminal, so open the terminal and execute the following code
 Using the browser, just type ``http://localhost:8090/api/spring/helloworld/16bits``
 
 ![](src/main/resources/helloworld/browser.png)
- 
+
+
+### By docker
+
+#### Build the image
+docker build -t spring/hello-docker .
+
+### List images
+
+### Run
+docker run -p<expose port>:<internal port>  <imageid> 
+docker run -p8090:8090 a0733cb9a156
+
+## Access the terminal
+docker container ls
+docker exec -it <container_id> /bin/bash 
+docker exec -it 2c0b30ec415d /bin/bash  
