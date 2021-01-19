@@ -58,3 +58,16 @@ docker run -p8090:8090 a0733cb9a156
 docker container ls
 docker exec -it <container_id> /bin/bash 
 docker exec -it 2c0b30ec415d /bin/bash  
+
+Stop and remove containers
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+Remove all images
+docker system prune
+
+Remove all images 
+docker rmi -f $(docker images -a -q)
+
+See the Linux version
+docker run -it <containerid> cat /etc/os-release
