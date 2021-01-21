@@ -42,3 +42,39 @@ Using the browser, just type ``http://localhost:8080/api/quarkus/helloworld/nero
 
 ![](src/main/resources/helloworld/browser.png)
  
+ 
+### By docker
+
+#### Build the image
+docker build -t spring/hello-docker .
+
+#### List images
+
+``docker image ls``
+
+#### Run
+``docker run -p<expose port>:<internal port>  <imageid>``
+ 
+``docker run -p8090:8090 a0733cb9a156``
+
+#### See all containers
+``docker container ls``
+
+#### Run container
+``docker exec -it <container_id> /bin/bash``
+ 
+``docker exec -it 2c0b30ec415d /bin/bash``
+
+#### Stop and remove containers
+``docker stop $(docker ps -a -q)``
+
+``docker rm $(docker ps -a -q)``
+
+### Remove all images
+``docker system prune``
+
+### Remove all images 
+``docker rmi -f $(docker images -a -q)``
+
+#### See the Linux version
+``docker exec -it 79c270d6d39e cat /etc/os-release``

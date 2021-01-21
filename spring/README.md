@@ -42,32 +42,38 @@ Using the browser, just type ``http://localhost:8090/api/spring/helloworld/16bit
 
 ![](src/main/resources/helloworld/browser.png)
 
-
 ### By docker
 
 #### Build the image
 docker build -t spring/hello-docker .
 
-### List images
+#### List images
 
-### Run
-docker run -p<expose port>:<internal port>  <imageid> 
-docker run -p8090:8090 a0733cb9a156
+``docker image ls``
 
-## Access the terminal
-docker container ls
-docker exec -it <container_id> /bin/bash 
-docker exec -it 2c0b30ec415d /bin/bash  
+#### Run
+``docker run -p<expose port>:<internal port>  <imageid>``
+ 
+``docker run -p8090:8090 a0733cb9a156``
 
-Stop and remove containers
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+#### See all containers
+``docker container ls``
 
-Remove all images
-docker system prune
+#### Run container
+``docker exec -it <container_id> /bin/bash``
+ 
+``docker exec -it 2c0b30ec415d /bin/bash``
 
-Remove all images 
-docker rmi -f $(docker images -a -q)
+#### Stop and remove containers
+``docker stop $(docker ps -a -q)``
 
-See the Linux version
-docker run -it <containerid> cat /etc/os-release
+``docker rm $(docker ps -a -q)``
+
+### Remove all images
+``docker system prune``
+
+### Remove all images 
+``docker rmi -f $(docker images -a -q)``
+
+#### See the Linux version
+``docker exec -it <containerid> cat /etc/os-release``
