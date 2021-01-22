@@ -78,3 +78,16 @@ docker build -t spring/hello-docker .
 
 #### See the Linux version
 ``docker exec -it 79c270d6d39e cat /etc/os-release``
+
+### Native image
+``export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0/Contents/Home``
+
+``export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0/Contents/Home``
+
+``./mvnw package -Pnative``
+
+``./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dnative-image.xmx=6g``
+
+``docker build -f src/main/docker/Dockerfile.native -t 16bits-quarkus/helloworld:0.0.1 .``
+
+``docker run -i --rm -p 8080:8080 16bits-quarkus/helloworld:0.0.1``
