@@ -10,3 +10,8 @@ Is expected the following behaviors
 2. Print a message using Log api
 3. Print a message using a REST service using Spring
 4. Print a message using a REST service using Quarkus
+
+### Docker Hub
+All images made so far are there.
+
+This is the [link](https://hub.docker.com/u/16bits) for the Docker Hub
