@@ -21,4 +21,6 @@ Remember! The first argument should be "log" or "system" and the second a name.
 
 Below there are 3 examples, using log, system and one unavailable that is Wizard. 
 
-![](src/main/resources/helloworld/running.png) 
+![](src/main/resources/helloworld/running.png)
+
+### Database types 
