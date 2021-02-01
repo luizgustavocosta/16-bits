@@ -23,4 +23,5 @@ Below there are 3 examples, using log, system and one unavailable that is Wizard
 
 ![](src/main/resources/helloworld/running.png)
 
-### Database types 
+### Database types
+Architecture 
