@@ -15,6 +15,10 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <mockito.core.version>2.24.0</mockito.core.version>
         <mockito.junit.jupiter.vesion>3.3.0</mockito.junit.jupiter.vesion>
+        <system-lambda.version>1.0.0</system-lambda.version>
+        <logcaptor.version>2.3.1</logcaptor.version>
+        <assertj-core.version>3.11.1</assertj-core.version>
+        <sl4j.version>1.7.25</sl4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -36,30 +40,30 @@
             <dependency>
                 <groupId>com.github.stefanbirkner</groupId>
                 <artifactId>system-lambda</artifactId>
-                <version>1.0.0</version>
+                <version>${system-lambda.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.github.hakky54</groupId>
                 <artifactId>logcaptor</artifactId>
-                <version>2.3.1</version>
+                <version>${logcaptor.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.11.1</version>
+                <version>${assertj-core.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.25</version>
+                <version>${sl4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
-                <version>1.7.25</version>
+                <version>${sl4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -99,5 +103,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

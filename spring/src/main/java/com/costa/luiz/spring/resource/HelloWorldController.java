@@ -1,4 +1,4 @@
-package com.costa.luiz.spring.helloworld.resource;
+package com.costa.luiz.spring.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package com.costa.luiz.spring.helloworld;
 
-import com.costa.luiz.spring.helloworld.resource.HelloWorldController;
+import com.costa.luiz.spring.resource.HelloWorldController;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
