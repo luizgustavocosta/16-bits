@@ -11,21 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @RestController
 @RequestMapping("/api/spring/customer")
 public class CustomerResource {
 
-
-    @Autowired
     private final CustomerRepository repository;
 
-    public CustomerResource(CustomerRepository repository) {
+    public CustomerResource(@Autowired CustomerRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping(produces = {MediaType.TEXT_EVENT_STREAM_VALUE})
     public Flux<Customer> allCustomer() {
-        return repository.findAll();
+        return Flux.
+                from(repository.findAll())
+                .delayElements(Duration.ofSeconds(1));
     }
 
     @GetMapping("{id}")

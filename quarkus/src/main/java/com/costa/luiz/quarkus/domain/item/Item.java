@@ -1,4 +1,4 @@
-package com.costa.luiz.domain;
+package com.costa.luiz.quarkus.domain.item;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
@@ -7,10 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Auction extends PanacheEntityBase {
+public class Item extends PanacheEntityBase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     public Integer id;
 
@@ -22,6 +22,15 @@ public class Auction extends PanacheEntityBase {
     @Column(length = 40)
     public String lastName;
 
+    public Item() {
+    }
+
+    public Item(@NotNull Integer id, @NotBlank String name, @NotBlank String lastName) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -31,4 +40,3 @@ public class Auction extends PanacheEntityBase {
                 '}';
     }
 }
-
