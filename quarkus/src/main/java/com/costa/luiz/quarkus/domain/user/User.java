@@ -1,6 +1,5 @@
 package com.costa.luiz.quarkus.domain.user;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
@@ -8,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "users")
 public class User extends PanacheEntityBase {
 
     @Id

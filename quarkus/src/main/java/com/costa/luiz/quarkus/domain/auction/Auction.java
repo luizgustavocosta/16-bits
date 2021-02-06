@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 @Entity
+@Table(name = "auctions")
 public class Auction extends PanacheEntityBase {
 
     @Id
