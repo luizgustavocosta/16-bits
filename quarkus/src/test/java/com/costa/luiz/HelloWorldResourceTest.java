@@ -2,6 +2,7 @@ package com.costa.luiz;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
