@@ -1,4 +1,4 @@
-package com.costa.luiz.spring.domain.payment;
+package com.costa.luiz.spring.domain.customer;
 
 
 import org.springframework.core.Ordered;
@@ -11,12 +11,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class PaymentExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<Object> handleEntityNotFound(IllegalArgumentException exception) {
-        ResourceError error = new ResourceError(HttpStatus.NOT_FOUND);
-        error.setMessage(exception.getMessage());
-        return new ResponseEntity<>(error, error.getStatus());
+        return new ResponseEntity<>(new ResourceError(HttpStatus.NOT_FOUND, exception),
+                HttpStatus.NOT_FOUND);
     }
 }

@@ -5,15 +5,16 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+/**
+ * Original code from https://www.toptal.com/java/spring-boot-rest-api-error-handling
+ */
 public class ResourceError {
-
 
     private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
     private String message;
     private String debugMessage;
-    //private List<ApiSubError> subErrors;
 
     private ResourceError() {
         timestamp = LocalDateTime.now();
@@ -24,11 +25,11 @@ public class ResourceError {
         this.status = status;
     }
 
-    ResourceError(HttpStatus status, Throwable ex) {
+    ResourceError(HttpStatus status, Throwable exception) {
         this();
         this.status = status;
         this.message = "Unexpected error";
-        this.debugMessage = ex.getLocalizedMessage();
+        this.debugMessage = exception.getLocalizedMessage();
     }
 
     ResourceError(HttpStatus status, String message, Throwable ex) {
