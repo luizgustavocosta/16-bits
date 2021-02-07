@@ -1,11 +1,10 @@
 package com.costa.luiz.spring.domain.customer;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * Original code from https://www.toptal.com/java/spring-boot-rest-api-error-handling
@@ -13,13 +12,12 @@ import java.time.LocalDateTime;
 public class ResourceError {
 
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    private LocalDateTime timestamp;
+    private Instant timestamp;
     private String message;
     private String details;
 
     ResourceError(HttpStatus httpStatus, Exception exception) {
-        timestamp = LocalDateTime.now();
+        timestamp = Instant.now();
         this.status = httpStatus;
         this.message = exception.getMessage();
 
@@ -34,7 +32,7 @@ public class ResourceError {
         return status;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
