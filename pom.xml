@@ -4,7 +4,7 @@
     <packaging>pom</packaging>
     <groupId>com.16bits</groupId>
     <artifactId>code</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>code-16-bits</name>
     <properties>
         <java.version>11</java.version>

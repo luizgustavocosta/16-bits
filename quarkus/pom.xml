@@ -4,8 +4,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.costa.luiz</groupId>
-    <artifactId>hello-world-quarkus</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>16-bits-quarkus</artifactId>
+    <version>0.0.3-SNAPSHOT</version>
+    <name>quarkus</name>
     <properties>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
         <maven.compiler.target>11</maven.compiler.target>

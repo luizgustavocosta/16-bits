@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.costa.luiz.spring</groupId>
 	<artifactId>16-bits-spring</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>hello-world-spring</name>
+	<version>0.0.3-SNAPSHOT</version>
+	<name>spring</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -43,11 +43,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>
