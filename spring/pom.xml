@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.costa.luiz.spring</groupId>
-	<artifactId>16-bits-spring</artifactId>
+	<artifactId>spring</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
 	<name>spring</name>
 	<description>Demo project for Spring Boot</description>

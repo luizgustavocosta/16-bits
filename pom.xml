@@ -5,7 +5,7 @@
     <groupId>com.16bits</groupId>
     <artifactId>code</artifactId>
     <version>0.0.3-SNAPSHOT</version>
-    <name>code-16-bits</name>
+    <name>16-bits</name>
     <properties>
         <java.version>11</java.version>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>

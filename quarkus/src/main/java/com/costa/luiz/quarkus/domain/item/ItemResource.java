@@ -19,7 +19,7 @@ public class ItemResource {
     public List<Item> findAll() {
         Item item = new Item();
         item.name = "Item";
-        item.lastName = LocalTime.now().toString();
+        item.description = LocalTime.now().toString();
         item.persistAndFlush();
         return Item.listAll();
     }

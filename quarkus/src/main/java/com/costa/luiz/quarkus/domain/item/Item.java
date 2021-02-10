@@ -21,23 +21,22 @@ public class Item extends PanacheEntityBase {
 
     @NotBlank
     @Column(length = 40)
-    public String lastName;
+    public String description;
 
     public Item() {
     }
 
-    public Item(@NotNull Integer id, @NotBlank String name, @NotBlank String lastName) {
+    public Item(@NotBlank String name, @NotBlank String description) {
         this.id = id;
         this.name = name;
-        this.lastName = lastName;
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-
+        return "Item{" +
                 ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
