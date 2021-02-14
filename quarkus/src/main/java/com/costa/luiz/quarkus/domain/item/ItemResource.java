@@ -14,57 +14,61 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.util.List;
 
-import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Path("/api/quarkus/v1/items")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class ItemResource {
 
     private static final Logger log = Logger.getLogger(ItemResource.class.getName());
+
+    @Inject
+    ItemRepository repository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public List<Item> findAll() {
-        return Item.listAll();
+        return repository.listAll();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Item findOne(@PathParam("id") Integer id) {
-        return Item.findById(id);
+    public Item findOne(@PathParam("id") Long id) {
+        return repository.findById(id);
     }
 
-    // Difference between Response and List
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") Integer id) {
-        Item.deleteById(id);
-        return Response.accepted(id).build();
+    @Transactional
+    public Response delete(@PathParam("id") Long id) {
+        repository.deleteById(id);
+        return Response.accepted(id + " deleted").build();
     }
 
     @POST
     @Transactional
     public Response add(Item item) {
-        Item.persist(item);
+        repository.persist(item);
         return Response.created(null).build();
     }
 
     @PUT
     @Transactional
     @Path("/id/{id}/name/{name}/description/{description}")
-    public Response update(@PathParam("id") Integer id,
+    public Response update(@PathParam("id") Long id,
                            @PathParam("name") String name,
                            @PathParam("description") String description) {
-        Item item = Item.findById(id);
+        Item item = repository.findById(id);
         if (isNull(item)) {
             throw new WebApplicationException("Item with id of " + id + " does not exist.", 404);
         }
         if (nonNull(name)) item.name = name;
         if (nonNull(description)) item.description = description;
-        Item.persist(item);
+        repository.persist(item);
         return Response.accepted(item).build();
     }
 
@@ -78,21 +82,21 @@ public class ItemResource {
         public Response toResponse(Exception exception) {
             log.error("Failed to handle request", exception);
 
-            int code = 500;
+            int httpStatus = 500;
             if (exception instanceof WebApplicationException) {
-                code = ((WebApplicationException) exception).getResponse().getStatus();
+                httpStatus = ((WebApplicationException) exception).getResponse().getStatus();
             }
 
             ObjectNode exceptionJson = objectMapper.createObjectNode();
             exceptionJson.put("exceptionType", exception.getClass().getName());
-            exceptionJson.put("code", code);
+            exceptionJson.put("httpStatus", httpStatus);
 
             if (exception.getMessage() != null) {
                 exceptionJson.put("error", exception.getMessage());
             }
 
-            return Response.status(code)
-                    .entity(exceptionJson)
+            return Response.status(httpStatus)
+                    .entity(exceptionJson.toString())
                     .build();
         }
 

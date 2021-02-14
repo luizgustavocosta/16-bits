@@ -13,7 +13,7 @@ public class Item extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    public Integer id;
+    public Long id;
 
     @NotBlank
     @Column(length = 40)
@@ -27,7 +27,6 @@ public class Item extends PanacheEntityBase {
     }
 
     public Item(@NotBlank String name, @NotBlank String description) {
-        this.id = id;
         this.name = name;
         this.description = description;
     }

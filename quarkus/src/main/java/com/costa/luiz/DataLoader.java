@@ -2,7 +2,7 @@ package com.costa.luiz;
 
 import com.costa.luiz.quarkus.domain.auction.Auction;
 import com.costa.luiz.quarkus.domain.item.Item;
-import io.quarkus.hibernate.orm.panache.Panache;
+import com.costa.luiz.quarkus.domain.user.User;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.StartupEvent;
 import org.jboss.logging.Logger;
@@ -29,8 +29,8 @@ public class DataLoader {
                     auction.startDate = ZonedDateTime.now();
                     auction.endDate = ZonedDateTime.now().plusDays(2);
                     PanacheEntityBase.persist(auction);
-
-                    PanacheEntityBase.persist(new Item("Item "+index, "DES"));
+                    PanacheEntityBase.persist(new Item("Item "+index, "Desc "+index));
+                    PanacheEntityBase.persist(new User("User "+index, "Last "+index));
                 });
 
 
