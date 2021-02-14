@@ -27,7 +27,7 @@ public class AuctionResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Auction findOne(@PathParam("id") Integer id) {
-        log.log(INFO, "Looking for auction ["+id+"]");
+        log.log(INFO, "Looking for auction [" + id + "]");
         return Auction.findById(id);
     }
 

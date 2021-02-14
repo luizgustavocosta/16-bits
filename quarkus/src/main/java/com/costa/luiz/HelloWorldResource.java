@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Path("/api/quarkus/helloworld")
 public class HelloWorldResource {
 
-    @ConfigProperty(name = "quarkus.http.port", defaultValue="-99")
+    @ConfigProperty(name = "quarkus.http.port", defaultValue = "-99")
     String port;
 
-    @ConfigProperty(name = "quarkus.http.host", defaultValue="unknown")
+    @ConfigProperty(name = "quarkus.http.host", defaultValue = "unknown")
     String host;
 
     @GET

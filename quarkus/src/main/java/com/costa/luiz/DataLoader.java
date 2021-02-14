@@ -29,11 +29,9 @@ public class DataLoader {
                     auction.startDate = ZonedDateTime.now();
                     auction.endDate = ZonedDateTime.now().plusDays(2);
                     PanacheEntityBase.persist(auction);
-                    PanacheEntityBase.persist(new Item("Item "+index, "Desc "+index));
-                    PanacheEntityBase.persist(new User("User "+index, "Last "+index));
+                    PanacheEntityBase.persist(new Item("Item " + index, "Desc " + index));
+                    PanacheEntityBase.persist(new User("User " + index, "Last " + index));
                 });
-
-
         LOGGER.info("Data loaded");
     }
 

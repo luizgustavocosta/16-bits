@@ -1,6 +1,5 @@
 package com.costa.luiz.quarkus.domain.auction;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
@@ -10,21 +9,18 @@ import java.time.ZonedDateTime;
 @Entity
 public class Auction extends PanacheEntityBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @NotBlank
     @Column
     public ZonedDateTime startDate;
-
     @NotBlank
     @Column
     public ZonedDateTime endDate;
-
     @NotBlank
     @Column(length = 40)
     public String status;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     public Auction() {
     }

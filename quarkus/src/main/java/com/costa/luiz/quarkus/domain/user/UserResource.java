@@ -1,7 +1,6 @@
 package com.costa.luiz.quarkus.domain.user;
 
 
-import com.costa.luiz.quarkus.domain.item.Item;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import javax.transaction.Transactional;
@@ -9,7 +8,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
