@@ -8,7 +8,7 @@
     <name>16-bits</name>
     <properties>
         <java.version>11</java.version>
-        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <junit.maven.surefire.plugin.version>2.19.1</junit.maven.surefire.plugin.version>
         <junit.platform.commons.version>1.6.2</junit.platform.commons.version>
         <junit.platform.surefire.provider.version>1.1.0</junit.platform.surefire.provider.version>
@@ -21,6 +21,9 @@
         <sl4j.version>1.7.25</sl4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--        Allure-->
+        <aspectj.version>1.9.4</aspectj.version>
+        <allure.version>2.13.6</allure.version>
     </properties>
 
     <modules>
@@ -65,6 +68,11 @@
                 <artifactId>slf4j-simple</artifactId>
                 <version>${sl4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-junit5</artifactId>
+                <version>${allure.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -87,6 +95,17 @@
                     <includes>
                         <include>**Test.java</include>
                     </includes>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -Dfile.encoding=UTF-8
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                        <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
+                        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
+                        <junit.jupiter.execution.parallel.config.strategy>dynamic</junit.jupiter.execution.parallel.config.strategy>
+                    </systemPropertyVariables>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -99,7 +118,21 @@
                         <artifactId>junit-jupiter-engine</artifactId>
                         <version>${junit.jupiter.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>1.9.4</version>
+                    </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

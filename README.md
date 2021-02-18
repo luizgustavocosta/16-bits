@@ -15,3 +15,7 @@ Is expected the following behaviors
 All images made so far are there.
 
 This is the [link](https://hub.docker.com/u/16bits) for the Docker Hub
+
+Test Report
+mvn clean test
+mvn allure:serve

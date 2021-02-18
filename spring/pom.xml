@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<allure.version>2.13.6</allure.version>
 	</properties>
 
 	<dependencies>
@@ -47,6 +48,13 @@
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Allure -->
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-junit5</artifactId>
+			<version>${allure.version}</version>
 			<scope>test</scope>
 		</dependency>
 
