@@ -21,6 +21,13 @@
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <jacoco.version>0.8.4</jacoco.version>
     </properties>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Luiz Costa Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/luizgustavocosta/16-bits</url>
+        </repository>
+    </distributionManagement>
     <dependencyManagement>
         <dependencies>
             <dependency>

@@ -18,7 +18,13 @@
 		<java.version>11</java.version>
 		<allure.version>2.13.6</allure.version>
 	</properties>
-
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Luiz Costa Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/luizgustavocosta/16-bits</url>
+		</repository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
