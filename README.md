@@ -2,7 +2,9 @@
 Code for the channel 16 bits
 
 ## Build status
-![Build Status](https://github.com/luizgustavocosta/16-bits/workflows/Java%20CI%20with%20Maven/badge.svg) 
+![Build status](https://github.com/luizgustavocosta/16-bits/workflows/Java%20CI%20with%20Maven/badge.svg) 
+
+![Allure](https://github.com/luizgustavocosta/16-bits/workflows/allure-junit5-maven/badge.svg) 
 
 ## Hello World
 Is expected the following behaviors
