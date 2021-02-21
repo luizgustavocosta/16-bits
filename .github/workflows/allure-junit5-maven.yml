@@ -7,7 +7,7 @@ on:
 jobs:
   autotests:
     name: Run tests and generate Allure Report
-    runs-on: ubuntu-latest
+    runs-on: ubuntu@22.4
     steps:
       - uses: actions/checkout@v2
 
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Test
         if: always()
-        run: mvn test
+        run: mvn verify
         continue-on-error: true
 
       - name: Get Allure history
