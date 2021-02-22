@@ -21,7 +21,6 @@
         <sl4j.version>1.7.25</sl4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!--        Allure-->
         <aspectj.version>1.9.4</aspectj.version>
         <allure.version>2.13.6</allure.version>
     </properties>
