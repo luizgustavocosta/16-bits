@@ -4,6 +4,8 @@ Code for the channel 16 bits
 ## Build status
 ![Build status](https://github.com/luizgustavocosta/16-bits/workflows/Java%20CI%20with%20Maven/badge.svg) 
 
+[![codecov](https://codecov.io/gh/luizgustavocosta/16-bits/branch/main/graph/badge.svg?token=FZKU9UKRIO)](https://codecov.io/gh/luizgustavocosta/16-bits)
+
 ![Allure](https://github.com/luizgustavocosta/16-bits/workflows/allure-junit5-maven/badge.svg) 
 
 ## Hello World
