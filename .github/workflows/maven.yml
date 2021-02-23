@@ -22,3 +22,15 @@ jobs:
         java-version: 11
     - name: Build with Maven
       run: mvn clean package
+
+    - name: Cobertura
+      if: always()
+      run: mvn cobertura:cobertura
+      continue-on-error: true
+
+    - uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: unittests # optional
+        name: codecov-umbrella # optional
+        fail_ci_if_error: false # optional (default = false)

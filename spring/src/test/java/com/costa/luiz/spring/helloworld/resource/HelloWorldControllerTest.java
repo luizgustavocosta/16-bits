@@ -18,8 +18,10 @@ class HelloWorldControllerTest implements WithAssertions {
 
     @Test
     void greetingShouldReturnDefaultMessage() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/api/spring/helloworld/luiz",
-                String.class)).contains("Spring saying 'Hello to");
+        final String response = restTemplate
+                .getForObject("http://localhost:" + port + "/api/spring/helloworld/luiz",
+                        String.class);
+        assertThat(response).contains("Spring saying 'Hello to");
     }
 
 }
