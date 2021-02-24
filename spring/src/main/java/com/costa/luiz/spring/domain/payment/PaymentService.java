@@ -23,7 +23,7 @@ public class PaymentService {
 
     public List<Payment> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 
     public Payment create(Payment payment) {

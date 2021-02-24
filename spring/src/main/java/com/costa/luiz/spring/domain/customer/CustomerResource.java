@@ -24,7 +24,7 @@ public class CustomerResource {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Customer> allCustomer() {
-        return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toUnmodifiableList());
+        return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @GetMapping("/firstname/{name}")
