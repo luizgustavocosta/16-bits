@@ -15,10 +15,6 @@ Is expected the following behaviors
 3. Print a message using a REST service using Spring
 4. Print a message using a REST service using Quarkus
 
-## Spring
-
-## Quarkus
-
 ### Docker Hub
 All images made so far are there.
 
