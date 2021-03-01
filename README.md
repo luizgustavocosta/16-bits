@@ -8,6 +8,8 @@ Code for the channel 16 bits
 
 ![Allure](https://github.com/luizgustavocosta/16-bits/workflows/allure-junit5-maven/badge.svg) 
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-orange.svg)](https://sonarcloud.io/dashboard?id=luizgustavocosta_16-bits)
+
 ## Hello World
 Is expected the following behaviors
 1. Print a message using System.out
