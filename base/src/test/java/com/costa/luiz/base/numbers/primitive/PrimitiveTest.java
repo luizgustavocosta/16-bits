@@ -21,7 +21,6 @@ class PrimitiveTest implements WithAssertions {
 
         @ParameterizedTest
         @ValueSource(ints = {42, 0x2a, 0b101010})
-            //@DisplayName("Play using int \uD83D\uDE30 \uD83D\uDE20 \uD83D\uDE29 \uD83D\uDE31 \uD83D\uDE03")
         void acceptValues(int value) {
             assertEquals(value, 42);
         }
