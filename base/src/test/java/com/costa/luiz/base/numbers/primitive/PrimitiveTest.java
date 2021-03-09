@@ -1,6 +1,7 @@
 package com.costa.luiz.base.numbers.primitive;
 
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PrimitiveTest implements WithAssertions {
 
     @Nested
-    class NumbersTest {
+    class LongTest {
+        @Test
+        void shouldStoreAIntegerValue() {
+            long actual = Integer.MAX_VALUE;
+            assertThat(actual).as("Should store an integer max value")
+                    .isEqualTo(Integer.MAX_VALUE);
+        }
+    }
 
+    @Nested
+    class NumbersTest {
         @ParameterizedTest
         @ValueSource(ints = {42, 0x2a, 0b101010})
         void acceptValues(int value) {
@@ -39,6 +49,7 @@ class PrimitiveTest implements WithAssertions {
         }
 
         @Test
+        @Disabled
         void timeUsingClassAndPrimitive() {
             int max = 100_000;
             int dummy = 0;
