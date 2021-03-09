@@ -20,7 +20,7 @@ class PrimitiveTest implements WithAssertions {
     @Nested
     class LongTest {
         @Test
-        void shouldStoreAIntegerValue() {
+        void shouldStoreAnIntegerValue() {
             long actual = Integer.MAX_VALUE;
             assertThat(actual).as("Should store an integer max value")
                     .isEqualTo(Integer.MAX_VALUE);
