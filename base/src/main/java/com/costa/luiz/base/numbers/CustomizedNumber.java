@@ -1,4 +1,4 @@
-package com.costa.luiz.base.numbers.primitive;
+package com.costa.luiz.base.numbers;
 
 public class CustomizedNumber extends Number {
 

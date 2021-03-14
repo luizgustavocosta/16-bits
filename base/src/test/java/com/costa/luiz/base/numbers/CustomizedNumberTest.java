@@ -1,14 +1,14 @@
-package com.costa.luiz.base.numbers.primitive;
+package com.costa.luiz.base.numbers;
 
 import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -25,17 +28,84 @@ class CustomizedNumberTest implements WithAssertions {
     void setUp() {
     }
 
+    @DisplayName("Integer")
+    @Test
+    void playingWithInteger() {
+        int expected = Integer.MAX_VALUE;
+        assertThat(expected).as("My expected values")
+                .isEqualTo(Integer.MAX_VALUE);
+
+        String magicNumber = "2021";
+        final int parseInt = Integer.parseInt(magicNumber);
+        final Integer magicNumberConverted = Integer.valueOf(magicNumber);
+
+        assertThat(parseInt).isEqualTo(magicNumberConverted.intValue());
+        assertThat(magicNumberConverted.toString())
+                .isEqualTo(magicNumber);
+    }
+
+    @Test
+    void playingWithLong() {
+        long expected = Long.MAX_VALUE;
+        assertThat(expected).as("My expected values")
+                .isEqualTo(Long.MAX_VALUE);
+
+        String magicNumber = "2021";
+        final long parseLong = Long.parseLong(magicNumber);
+        final Long magicNumberConverted = Long.valueOf(magicNumber);
+
+        assertThat(parseLong).isEqualTo(magicNumberConverted.longValue());
+        assertThat(magicNumberConverted.toString())
+                .isEqualTo(magicNumber);
+    }
+
+    @Test
+    void playingWithDouble() {
+        Double myDouble = Double.valueOf("999999999d");
+        float myFloat = 999999999f;
+        assertThat(myDouble.floatValue()).isEqualTo(myFloat);
+    }
+
+    @Disabled
+    @Test
+    void playingWithFloat() {
+        Float myFloat = Float.valueOf("999999999f");
+        double myDouble = 999999999d;
+        assertThat(myFloat.intValue()).isEqualTo(
+                Integer.valueOf(String.valueOf(myDouble)));
+    }
+
+    @Test
+    void playingWithBigInteger() {
+        final BigInteger bigInteger =
+                BigInteger.valueOf(Long.MAX_VALUE);
+        final BigInteger reduce = IntStream.rangeClosed(1, 3)
+                .mapToObj(value -> Long.MAX_VALUE)
+                .map(BigInteger::valueOf)
+                .reduce(BigInteger.ZERO, BigInteger::add);
+
+        final BigInteger multiply = bigInteger.multiply(
+                BigInteger.valueOf(3));
+        assertThat(multiply).isEqualTo(reduce);
+    }
+
     @EnabledOnOs(OS.MAC)
     @Test
-    void whenBigComesEverythingIsBig() {
-        BigInteger bigInteger = new BigInteger(String.valueOf(Long.MAX_VALUE)).multiply(BigInteger.TWO);
-        final BigDecimal bigDecimalAsLongMaxValue = new BigDecimal(String.valueOf(Long.MAX_VALUE));
-        BigDecimal hughNumber = bigDecimalAsLongMaxValue.multiply(bigDecimalAsLongMaxValue);
+    void playingWithBigDecimal() {
+        final BigDecimal maxLongValue =
+                BigDecimal.valueOf(Long.MAX_VALUE);
+        final BigDecimal reduce = IntStream.rangeClosed(1, 3)
+                .mapToObj(value -> Long.MAX_VALUE)
+                .map(BigDecimal::valueOf)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        assertThat(bigInteger).as("Has value").isGreaterThan(BigInteger.TEN);
-        final BigDecimal scaled = hughNumber.setScale(2);
-        assertThat(hughNumber).as("Huge calculation...").isNotNegative();
+        final BigDecimal multiply = maxLongValue.multiply(
+                BigDecimal.valueOf(3));
+
+        assertThat(multiply).isEqualTo(reduce);
     }
+
+
 
     @EnabledOnOs(OS.MAC)
     @Test
@@ -46,12 +116,12 @@ class CustomizedNumberTest implements WithAssertions {
         final ExecutorService executorService = Executors.newFixedThreadPool(5);
         long max = 100_000L;
         // When
-        for (int index = 0; index < max; index++) {
-            executorService.execute(() -> {
-                atomicInteger.incrementAndGet();
-                customizedNumber.intIncrement();
-            });
-        }
+        LongStream.range(0, max)
+                .forEach(index -> executorService.execute(() -> {
+                    atomicInteger.incrementAndGet();
+                    customizedNumber.intIncrement();
+                }));
+
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
 
         // Then
