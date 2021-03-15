@@ -21,8 +21,11 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomizedNumberTest implements WithAssertions {
+
+    public static final int THREADS = 5;
 
     @BeforeEach
     void setUp() {
@@ -66,13 +69,11 @@ class CustomizedNumberTest implements WithAssertions {
         assertThat(myDouble.floatValue()).isEqualTo(myFloat);
     }
 
-    @Disabled
     @Test
     void playingWithFloat() {
         Float myFloat = Float.valueOf("999999999f");
         double myDouble = 999999999d;
-        assertThat(myFloat.intValue()).isEqualTo(
-                Integer.valueOf(String.valueOf(myDouble)));
+        assertEquals(myFloat, myDouble,  1d);
     }
 
     @Test
@@ -105,15 +106,13 @@ class CustomizedNumberTest implements WithAssertions {
         assertThat(multiply).isEqualTo(reduce);
     }
 
-
-
     @EnabledOnOs(OS.MAC)
     @Test
     void whenIncrementalReturnCorrectValue() {
         // Given
         final CustomizedNumber customizedNumber = new CustomizedNumber();
         AtomicInteger atomicInteger = new AtomicInteger();
-        final ExecutorService executorService = Executors.newFixedThreadPool(5);
+        final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
         long max = 100_000L;
         // When
         LongStream.range(0, max)
@@ -142,7 +141,7 @@ class CustomizedNumberTest implements WithAssertions {
         // Given
         final CustomizedNumber customizedNumber = new CustomizedNumber();
         DoubleAdder doubleAdder = new DoubleAdder();
-        final ExecutorService executorService = Executors.newFixedThreadPool(5);
+        final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
         long max = 100_000L;
 
         // When
@@ -184,7 +183,7 @@ class CustomizedNumberTest implements WithAssertions {
                 customizedNumber.longPrimitiveIncrement(); // Primitive
             });
         }
-        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(5, TimeUnit.SECONDS));
+        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(THREADS, TimeUnit.SECONDS));
 
         // Then
         assertAll(() -> {
