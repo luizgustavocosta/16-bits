@@ -7,8 +7,6 @@ import org.junit.jupiter.api.condition.OS;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -16,14 +14,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.util.concurrent.atomic.LongAdder;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CustomizedNumberTest implements WithAssertions {
+class MyPrimitiveTest implements WithAssertions {
 
     public static final int THREADS = 5;
 
@@ -110,7 +107,7 @@ class CustomizedNumberTest implements WithAssertions {
     @Test
     void whenIncrementalReturnCorrectValue() {
         // Given
-        final CustomizedNumber customizedNumber = new CustomizedNumber();
+        final MyPrimitive myPrimitive = new MyPrimitive();
         AtomicInteger atomicInteger = new AtomicInteger();
         final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
         long max = 100_000L;
@@ -118,7 +115,7 @@ class CustomizedNumberTest implements WithAssertions {
         LongStream.range(0, max)
                 .forEach(index -> executorService.execute(() -> {
                     atomicInteger.incrementAndGet();
-                    customizedNumber.intIncrement();
+                    myPrimitive.intIncrement();
                 }));
 
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
@@ -131,7 +128,7 @@ class CustomizedNumberTest implements WithAssertions {
             assertThat(atomicInteger.intValue()).as("Expecting " + max)
                     .isEqualTo(max);
             assertThat(atomicInteger.doubleValue()).as("Atomic should be bigger than int")
-                    .isGreaterThan(customizedNumber.getIntIncrement());
+                    .isGreaterThan(myPrimitive.getIntIncrement());
         });
     }
 
@@ -139,7 +136,7 @@ class CustomizedNumberTest implements WithAssertions {
     @Test
     void testDoubleAdder() {
         // Given
-        final CustomizedNumber customizedNumber = new CustomizedNumber();
+        final MyPrimitive myPrimitive = new MyPrimitive();
         DoubleAdder doubleAdder = new DoubleAdder();
         final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
         long max = 100_000L;
@@ -148,7 +145,7 @@ class CustomizedNumberTest implements WithAssertions {
         for (int index = 0; index < max; index++) {
             executorService.execute(() -> {
                 doubleAdder.add(1d);
-                customizedNumber.doubleIncrement();
+                myPrimitive.doubleIncrement();
             });
         }
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
@@ -161,7 +158,7 @@ class CustomizedNumberTest implements WithAssertions {
             assertThat(doubleAdder.longValue()).as("Expecting " + max)
                     .isEqualTo(max);
             assertThat(doubleAdder.doubleValue()).as("Adder bigger than long")
-                    .isGreaterThan(customizedNumber.getDoubleIncrement());
+                    .isGreaterThan(myPrimitive.getDoubleIncrement());
         });
     }
 
@@ -169,7 +166,7 @@ class CustomizedNumberTest implements WithAssertions {
     @Test
     void testIncrementValues() {
         // Given
-        final CustomizedNumber customizedNumber = new CustomizedNumber();
+        final MyPrimitive myPrimitive = new MyPrimitive();
         LongAdder longAdder = new LongAdder();
         AtomicLong atomicLong = new AtomicLong();
         final ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -180,7 +177,7 @@ class CustomizedNumberTest implements WithAssertions {
             executorService.execute(() -> {
                 longAdder.increment(); // Long Adder
                 atomicLong.incrementAndGet(); // Atomic Long
-                customizedNumber.longPrimitiveIncrement(); // Primitive
+                myPrimitive.longPrimitiveIncrement(); // Primitive
             });
         }
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(THREADS, TimeUnit.SECONDS));
@@ -195,7 +192,7 @@ class CustomizedNumberTest implements WithAssertions {
                     .isEqualTo(atomicLong.longValue());
 
             assertThat(longAdder.longValue()).as("Adder bigger than long")
-                    .isGreaterThan(customizedNumber.getLongIncrement());
+                    .isGreaterThan(myPrimitive.getLongIncrement());
         });
 
     }

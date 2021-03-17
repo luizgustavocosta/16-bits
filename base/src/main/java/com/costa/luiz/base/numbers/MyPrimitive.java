@@ -1,6 +1,6 @@
 package com.costa.luiz.base.numbers;
 
-public class CustomizedNumber extends Number {
+public class MyPrimitive extends Number {
 
     private final int magicNumber = 42;
 
