@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.LongAdder;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class MyAdderTest {
 
 
