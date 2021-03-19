@@ -27,4 +27,8 @@ target
 hs_err_pid*
 /.allure*
 /base/.allure/*
-/base/.allure
+/base/allure*
+/.settings/*
+.settings
+.classpath
+.project

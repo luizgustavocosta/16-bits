@@ -4,7 +4,6 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
@@ -35,20 +34,20 @@ class MyAtomicTest implements WithAssertions {
     @DisplayName("Increment Atomic and int")
     void shouldRespectTheIncrementAsInteger() {
         final ExecutorService executorService = Executors.newFixedThreadPool(5);
-        int max = 1_000;
+        int max = 1_000_000;
         AtomicInteger atomicInteger = new AtomicInteger();
         IntStream.range(0, max)
                 .forEach(index -> executorService.execute(() -> {
                     atomicInteger.incrementAndGet();
-                    myAtomic.incrementMyInt();
+                    myAtomic.incrementCountAsInt();
                 }));
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
 
         final int atomicValue = atomicInteger.get();
-        final int nonAtomicValue = myAtomic.getNumberAsInt();
+        final int nonAtomicValue = myAtomic.getCountAsInt();
 
-        logger.log(Level.INFO, "Atomic .: "+atomicValue);
-        logger.log(Level.INFO, "Non-atomic .: "+nonAtomicValue);
+        logger.log(Level.FINE, "Atomic .: "+atomicValue);
+        logger.log(Level.FINE, "Non-atomic .: "+nonAtomicValue);
 
         assertThat(throwable).isNull();
         assertThat(atomicValue).as("The values should be different").isNotEqualTo(nonAtomicValue);
@@ -59,19 +58,19 @@ class MyAtomicTest implements WithAssertions {
     void shouldRespectTheIncrementAsLong() {
         final ExecutorService executorService = Executors.newFixedThreadPool(5);
         AtomicLong atomicLong = new AtomicLong();
-        long max = 1_000;
+        long max = 1_000_000;
         LongStream.range(0, max)
                 .forEach(index -> executorService.execute(() -> {
                     atomicLong.incrementAndGet();
-                    myAtomic.incrementMyLong();
+                    myAtomic.incrementCountAsLong();
                 }));
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
 
         final long atomicValue = atomicLong.get();
-        final long nonAtomicValue = myAtomic.getNumberAsLong();
+        final long nonAtomicValue = myAtomic.getCountAsLong();
 
-        logger.log(Level.INFO, "Atomic .: "+atomicValue);
-        logger.log(Level.INFO, "Non-atomic .: "+nonAtomicValue);
+        logger.log(Level.FINE, "Atomic .: "+atomicValue);
+        logger.log(Level.FINE, "Non-atomic .: "+nonAtomicValue);
 
         assertThat(throwable).isNull();
         assertThat(atomicValue).as("The values should be different").isNotEqualTo(nonAtomicValue);

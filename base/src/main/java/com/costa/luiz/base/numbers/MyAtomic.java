@@ -2,30 +2,22 @@ package com.costa.luiz.base.numbers;
 
 public class MyAtomic {
 
-    int numberAsInt;
-    long numberAsLong;
+    volatile int countAsInt;
+    volatile long countAsLong;
 
-    public void incrementMyInt() {
-        this.numberAsInt++;
+    public void incrementCountAsInt() {
+        this.countAsInt++;
     }
 
-    public int getNumberAsInt() {
-        return numberAsInt;
+    public int getCountAsInt() {
+        return countAsInt;
     }
 
-    public void setNumberAsInt(int numberAsInt) {
-        this.numberAsInt = numberAsInt;
+    public void incrementCountAsLong() {
+        this.countAsLong++;
     }
 
-    public void incrementMyLong() {
-        this.numberAsLong++;
-    }
-
-    public long getNumberAsLong() {
-        return numberAsLong;
-    }
-
-    public void setNumberAsLong(long numberAsLong) {
-        this.numberAsLong = numberAsLong;
+    public long getCountAsLong() {
+        return countAsLong;
     }
 }

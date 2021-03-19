@@ -2,6 +2,8 @@ package com.costa.luiz.base.numbers;
 
 public class MyPrimitive extends Number {
 
+    private static final long serialVersionUID = 1L;
+
     private final int magicNumber = 42;
 
     private int intPrimitive;
