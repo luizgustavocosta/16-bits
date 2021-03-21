@@ -24,6 +24,8 @@ class MyAtomicTest implements WithAssertions {
     private static final Logger logger = Logger.getLogger(MyAtomicTest.class.getName());
 
     private MyAtomic myAtomic;
+    private final short numberOfThread = 5;
+    private final short awaitTimeout = 2;
 
     @BeforeEach
     void setUp() {
@@ -33,21 +35,21 @@ class MyAtomicTest implements WithAssertions {
     @RepeatedTest(3)
     @DisplayName("Increment Atomic and int")
     void shouldRespectTheIncrementAsInteger() {
-        final ExecutorService executorService = Executors.newFixedThreadPool(5);
-        int max = 1_000_000;
+        final ExecutorService executorService = Executors.newFixedThreadPool(numberOfThread);
+        int min = 0, max = 1_000_000;
         AtomicInteger atomicInteger = new AtomicInteger();
-        IntStream.range(0, max)
+        IntStream.range(min, max)
                 .forEach(index -> executorService.execute(() -> {
                     atomicInteger.incrementAndGet();
                     myAtomic.incrementCountAsInt();
                 }));
-        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
+        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(awaitTimeout, TimeUnit.SECONDS));
 
         final int atomicValue = atomicInteger.get();
         final int nonAtomicValue = myAtomic.getCountAsInt();
 
-        logger.log(Level.FINE, "Atomic .: "+atomicValue);
-        logger.log(Level.FINE, "Non-atomic .: "+nonAtomicValue);
+        logger.log(Level.INFO, "Atomic .: "+atomicValue);
+        logger.log(Level.INFO, "Non-atomic .: "+nonAtomicValue);
 
         assertThat(throwable).isNull();
         assertThat(atomicValue).as("The values should be different").isNotEqualTo(nonAtomicValue);
@@ -56,15 +58,15 @@ class MyAtomicTest implements WithAssertions {
     @RepeatedTest(3)
     @DisplayName("Increment Atomic and long")
     void shouldRespectTheIncrementAsLong() {
-        final ExecutorService executorService = Executors.newFixedThreadPool(5);
+        final ExecutorService executorService = Executors.newFixedThreadPool(numberOfThread);
         AtomicLong atomicLong = new AtomicLong();
-        long max = 1_000_000;
-        LongStream.range(0, max)
+        long min = 0, max = 1_000_000;
+        LongStream.range(min, max)
                 .forEach(index -> executorService.execute(() -> {
                     atomicLong.incrementAndGet();
                     myAtomic.incrementCountAsLong();
                 }));
-        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
+        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(awaitTimeout, TimeUnit.SECONDS));
 
         final long atomicValue = atomicLong.get();
         final long nonAtomicValue = myAtomic.getCountAsLong();
