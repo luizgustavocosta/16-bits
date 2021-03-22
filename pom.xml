@@ -27,6 +27,7 @@
 
     <modules>
         <module>base</module>
+        <module>grpc</module>
     </modules>
 
     <distributionManagement>
