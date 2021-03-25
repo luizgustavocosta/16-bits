@@ -162,40 +162,7 @@ class MyPrimitiveTest implements WithAssertions {
         });
     }
 
-    @EnabledOnOs(OS.MAC)
-    @Test
-    void testIncrementValues() {
-        // Given
-        final MyPrimitive myPrimitive = new MyPrimitive();
-        LongAdder longAdder = new LongAdder();
-        AtomicLong atomicLong = new AtomicLong();
-        final ExecutorService executorService = Executors.newFixedThreadPool(10);
-        long max = 20_000_000L;
 
-        // when
-        for (long index = 0; index < max; index++) {
-            executorService.execute(() -> {
-                longAdder.increment(); // Long Adder
-                atomicLong.incrementAndGet(); // Atomic Long
-                myPrimitive.longPrimitiveIncrement(); // Primitive
-            });
-        }
-        Throwable throwable = catchThrowable(() -> executorService.awaitTermination(THREADS, TimeUnit.SECONDS));
-
-        // Then
-        assertAll(() -> {
-            assertThat(throwable).as("No problem detected").isNull();
-
-            assertThat(longAdder.longValue()).as("Expecting " + max).isEqualTo(max);
-
-            assertThat(longAdder.longValue()).as("Has to have same value")
-                    .isEqualTo(atomicLong.longValue());
-
-            assertThat(longAdder.longValue()).as("Adder bigger than long")
-                    .isGreaterThan(myPrimitive.getLongIncrement());
-        });
-
-    }
 
     @AfterEach
     void tearDown() {
