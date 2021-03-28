@@ -3,6 +3,7 @@ package com.costa.luiz.base.numbers;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
@@ -13,10 +14,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.DoubleAccumulator;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.util.concurrent.atomic.LongAccumulator;
+import java.util.function.LongBinaryOperator;
+import java.util.function.LongToDoubleFunction;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * References
@@ -51,6 +54,27 @@ class MyAccumulatorTest implements WithAssertions {
             assertNull(throwable);
             assertThat(longAccumulator.get()).as("Should be the same").isEqualTo(atomicLong.get());
         });
+    }
+
+    @Test
+    void playingWithLong() {
+        LongBinaryOperator binaryOperator = (left, right) -> 2 * left + right; //20+3 = 23
+
+        final long asLong = binaryOperator.applyAsLong(10, 3);
+
+        assertEquals(23, asLong);
+
+        LongToDoubleFunction longToDoubleFunction = divisor -> divisor / 3d;
+        final double apply = longToDoubleFunction.applyAsDouble(30);
+        assertEquals(10, apply);
+
+        //LongAccumulator accumulator = new LongAccumulator(binaryOperator, 0L);
+
+        LongAccumulator longAccumulator = new LongAccumulator(Long::sum, 0L);
+        LongStream.rangeClosed(1, 10)
+                .forEach(longAccumulator::accumulate);
+
+        assertEquals(55, longAccumulator.get());
     }
 
     @EnabledOnOs(OS.MAC)
