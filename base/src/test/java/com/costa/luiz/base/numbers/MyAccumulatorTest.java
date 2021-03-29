@@ -4,8 +4,6 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,7 +14,6 @@ import java.util.concurrent.atomic.DoubleAdder;
 import java.util.concurrent.atomic.LongAccumulator;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongToDoubleFunction;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,20 +26,27 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Accumulator test")
 class MyAccumulatorTest implements WithAssertions {
 
-    @EnabledOnOs(OS.MAC)
-    @RepeatedTest(3)
+    long identity = 0L;
+
+    @RepeatedTest(1)
     @DisplayName("Long accumulator")
     void longAccumulator() {
+
         AtomicLong atomicLong = new AtomicLong();
-        LongAccumulator longAccumulator =
-                new LongAccumulator(Long::sum, 0L);
+        LongAccumulator sum = new LongAccumulator(Long::sum, identity);
+        LongAccumulator max = new LongAccumulator(Long::max, identity);
+
+        LongBinaryOperator accumulatorFunction = (left, right) -> left < right ? left : right;
+        LongAccumulator min = new LongAccumulator(accumulatorFunction, 2021L);
 
         int threads = 10;
         ExecutorService executorService = Executors.newFixedThreadPool(threads);
         long start = 0L, end = 2_000_000L;
         LongStream.rangeClosed(start, end)
                 .forEach(number -> executorService.submit(() -> {
-                    longAccumulator.accumulate(number);
+                    sum.accumulate(number);
+                    max.accumulate(number);
+                    min.accumulate(number);
                     atomicLong.accumulateAndGet(number, Long::sum);
                 }));
 
@@ -50,9 +54,12 @@ class MyAccumulatorTest implements WithAssertions {
         catchThrowable(() ->
                 executorService.awaitTermination(1, TimeUnit.SECONDS));
 
+        assertEquals(end, max.get());
+        assertEquals(start, min.get());
+
         assertAll(() -> {
             assertNull(throwable);
-            assertThat(longAccumulator.get()).as("Should be the same").isEqualTo(atomicLong.get());
+            assertThat(sum.get()).as("Should be the same").isEqualTo(atomicLong.get());
         });
     }
 
@@ -77,22 +84,26 @@ class MyAccumulatorTest implements WithAssertions {
         assertEquals(55, longAccumulator.get());
     }
 
-    @EnabledOnOs(OS.MAC)
-    @RepeatedTest(3)
+    @RepeatedTest(1)
     @DisplayName("Double accumulator")
     void doubleAccumulator() {
         DoubleAdder doubleAdder = new DoubleAdder();
         final Double[] myDouble = {0d};
-        DoubleAccumulator doubleAccumulator =
-                new DoubleAccumulator(Double::sum, 0L);
+
+        DoubleAccumulator sumAccumulator =
+                new DoubleAccumulator(Double::sum, identity);
+
+        DoubleAccumulator maxAccumulator =
+                new DoubleAccumulator(Double::max, identity);
 
         int threads = 10;
         ExecutorService executorService = Executors.newFixedThreadPool(threads);
         long start = 0L, end = 100_000L;
         LongStream.rangeClosed(start, end)
                 .forEach(number -> executorService.submit(() -> {
-                    doubleAccumulator.accumulate(number);
+                    sumAccumulator.accumulate(number);
                     doubleAdder.add(number);
+                    maxAccumulator.accumulate(number);
                     myDouble[0] = myDouble[0] + number;
                 }));
 
@@ -102,7 +113,8 @@ class MyAccumulatorTest implements WithAssertions {
 
         assertAll(() -> {
             assertNull(throwable);
-            assertThat(doubleAccumulator.get()).as("Should be the different").isNotEqualTo(myDouble[0]);
+            assertThat(sumAccumulator.get()).as("Should be the different").isNotEqualTo(myDouble[0]);
+            assertThat(maxAccumulator.get()).as("Expected as end variable").isEqualTo(end);
         });
     }
 
