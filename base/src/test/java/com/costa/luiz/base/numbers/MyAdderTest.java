@@ -41,7 +41,7 @@ class MyAdderTest implements WithAssertions {
                 .forEach(i -> executor.submit(() -> accumulator.accumulate(i)));
 
         Throwable otherThrowable = catchThrowable(() -> executorService.awaitTermination(2, TimeUnit.SECONDS));
-        assertNotNull(otherThrowable);
+        assertNull(otherThrowable);
         System.out.println("\nFrom get and Reset"+accumulator.getThenReset());
     }
 
