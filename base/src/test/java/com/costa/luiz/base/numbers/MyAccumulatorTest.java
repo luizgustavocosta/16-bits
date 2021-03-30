@@ -4,6 +4,8 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -82,6 +84,7 @@ class MyAccumulatorTest implements WithAssertions {
 
     @RepeatedTest(1)
     @DisplayName("Double accumulator")
+    @EnabledOnOs(OS.MAC)
     void doubleAccumulator() {
         //https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/atomic/DoubleAccumulator.html
         DoubleAdder doubleAdder = new DoubleAdder();
