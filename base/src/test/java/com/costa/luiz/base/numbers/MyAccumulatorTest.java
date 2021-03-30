@@ -18,15 +18,12 @@ import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * References
- * https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/atomic/DoubleAccumulator.html
- *
- */
 @DisplayName("Accumulator test")
 class MyAccumulatorTest implements WithAssertions {
 
     long identity = 0L;
+
+    private static final ThreadLocal<Integer> THREADS = ThreadLocal.withInitial(() -> 5);
 
     @RepeatedTest(1)
     @DisplayName("Long accumulator")
@@ -39,8 +36,7 @@ class MyAccumulatorTest implements WithAssertions {
         LongBinaryOperator accumulatorFunction = (left, right) -> left < right ? left : right;
         LongAccumulator min = new LongAccumulator(accumulatorFunction, 2021L);
 
-        int threads = 10;
-        ExecutorService executorService = Executors.newFixedThreadPool(threads);
+        ExecutorService executorService = Executors.newFixedThreadPool(THREADS.get());
         long start = 0L, end = 2_000_000L;
         LongStream.rangeClosed(start, end)
                 .forEach(number -> executorService.submit(() -> {
@@ -77,7 +73,7 @@ class MyAccumulatorTest implements WithAssertions {
 
         //LongAccumulator accumulator = new LongAccumulator(binaryOperator, 0L);
 
-        LongAccumulator longAccumulator = new LongAccumulator(Long::sum, 0L);
+        LongAccumulator longAccumulator = new LongAccumulator(Long::sum, identity);
         LongStream.rangeClosed(1, 10)
                 .forEach(longAccumulator::accumulate);
 
@@ -87,6 +83,7 @@ class MyAccumulatorTest implements WithAssertions {
     @RepeatedTest(1)
     @DisplayName("Double accumulator")
     void doubleAccumulator() {
+        //https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/atomic/DoubleAccumulator.html
         DoubleAdder doubleAdder = new DoubleAdder();
         final Double[] myDouble = {0d};
 
@@ -96,8 +93,7 @@ class MyAccumulatorTest implements WithAssertions {
         DoubleAccumulator maxAccumulator =
                 new DoubleAccumulator(Double::max, identity);
 
-        int threads = 10;
-        ExecutorService executorService = Executors.newFixedThreadPool(threads);
+        ExecutorService executorService = Executors.newFixedThreadPool(THREADS.get());
         long start = 0L, end = 100_000L;
         LongStream.rangeClosed(start, end)
                 .forEach(number -> executorService.submit(() -> {

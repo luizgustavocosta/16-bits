@@ -3,6 +3,8 @@ package com.costa.luiz.base.numbers;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyAdderTest implements WithAssertions {
 
     private static final ThreadLocal<Integer> THREADS = ThreadLocal.withInitial(() -> 5);
-    private final long identity = 0L;
 
     @RepeatedTest(2)
     void longAdder() {
@@ -34,6 +35,7 @@ class MyAdderTest implements WithAssertions {
 
         // Test 2
         LongBinaryOperator operator = Long::sum;
+        long identity = 0L;
         LongAccumulator accumulator = new LongAccumulator(operator, identity);
 
         ExecutorService executor = Executors.newFixedThreadPool(THREADS.get());
@@ -45,6 +47,7 @@ class MyAdderTest implements WithAssertions {
         System.out.println("\nFrom get and Reset"+accumulator.getThenReset());
     }
 
+    @EnabledOnOs(OS.MAC)
     @RepeatedTest(2)
     @DisplayName("Double adder")
     void doubleAdder() {
