@@ -3,9 +3,11 @@ package com.costa.luiz.base.numbers;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +24,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyAdderTest implements WithAssertions {
 
     private static final ThreadLocal<Integer> THREADS = ThreadLocal.withInitial(() -> 5);
+
+    @Test
+    void onConcurrentHashMap() {
+        ConcurrentHashMap<String,LongAdder> frequency = new ConcurrentHashMap<>();
+        String key = "Java";
+        long from = 0, to = 5;
+        for (long index = from; index <= to; index++) {
+            frequency.computeIfAbsent(key, identifier -> new LongAdder()).add(index);
+        }
+        final long expectedValue = LongStream.rangeClosed(from, to).sum();
+        assertThat(expectedValue).as("LongValue should be equals to sum")
+                .isEqualTo(frequency.values().iterator().next().longValue());
+
+        assertThat(expectedValue).as("Sum should be equals to sum")
+                .isEqualTo(frequency.values().iterator().next().sum());
+    }
 
     @RepeatedTest(2)
     void longAdder() {

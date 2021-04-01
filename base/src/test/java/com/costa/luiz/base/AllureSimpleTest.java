@@ -7,16 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 
-public class AllureSimpleTest {
+class AllureSimpleTest {
 
     @Test
     @DisplayName("allureSimpleTest displayName")
-    public void allureSimpleTest() {
+    void allureSimpleTest() {
         step("Simple step");
         step("Simple step with status", Status.FAILED);
-        step("Simple lambda step", () -> {
-            step("Simple step inside lambda step");
-        });
+        step("Simple lambda step", () -> step("Simple step inside lambda step"));
         simpleTestMethod("method parameter");
     }
 
