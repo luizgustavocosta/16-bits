@@ -56,8 +56,8 @@ class MyAdderTest implements WithAssertions {
     void longAdder() {
         LongAdder adder = new LongAdder();
         ExecutorService executorService = Executors.newFixedThreadPool(THREADS.get());
-        IntStream.range(start, end)
-                .forEach(number -> executorService.submit(adder::increment)); //adder::sum
+        LongStream.range(start, end)
+                .forEach(iteration -> executorService.submit(adder::increment)); //adder::sum
         Throwable throwable = catchThrowable(() -> executorService.awaitTermination(timeout, TimeUnit.SECONDS));
 
         int expected = 1_000;
@@ -65,6 +65,7 @@ class MyAdderTest implements WithAssertions {
         assertAll(() -> {
             assertNull(throwable);
             assertThat(adder.sum()).isEqualTo(expected);
+            assertThat(adder.longValue()).isEqualTo(expected);
         });
     }
 
@@ -90,24 +91,24 @@ class MyAdderTest implements WithAssertions {
     @RepeatedTest(2)
     @DisplayName("Double adder")
     void doubleAdder() {
-        DoubleAdder doubleAdder = new DoubleAdder();
+        DoubleAdder adder = new DoubleAdder();
         final Double[] myDouble = {0d};
 
         ExecutorService executorService = Executors.newFixedThreadPool(THREADS.get());
         long start = 0L, end = 100_000L;
         LongStream.rangeClosed(start, end)
                 .forEach(number -> executorService.submit(() -> {
-                    doubleAdder.add(number);
+                    adder.add(number);
                     myDouble[0] = myDouble[0] + number;
                 }));
 
         Throwable throwable =
                 catchThrowable(() ->
-                        executorService.awaitTermination(1, TimeUnit.SECONDS));
+                        executorService.awaitTermination(timeout, TimeUnit.SECONDS));
 
         assertAll(() -> {
             assertNull(throwable);
-            assertThat(doubleAdder.sum()).as("Should be the different").isNotEqualTo(myDouble[0]);
+            assertThat(adder.sum()).as("Should be the different").isNotEqualTo(myDouble[0]);
         });
     }
 }
