@@ -7,13 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
-import java.util.IntSummaryStatistics;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.*;
 import java.util.function.LongBinaryOperator;
-import java.util.function.LongFunction;
 import java.util.function.LongToDoubleFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -83,6 +81,36 @@ class MyAccumulatorTest implements WithAssertions {
     }
 
     @Test
+    void usingLongAsAccumulator() {
+        LongAccumulator accumulator = new LongAccumulator(Long::sum, identity);
+        LongStream.rangeClosed(0, 5)
+                .forEach(accumulator::accumulate);
+
+        long expected = 0L;
+        for (int index = 0; index <= 5; index++) {
+            expected += index;
+        }
+
+        assertThat(accumulator.get()).as("The sum should be equals the expected").isEqualTo(expected);
+    }
+
+    @Test
+    void usingDoubleAsAccumulator() {
+        DoubleAccumulator accumulator = new DoubleAccumulator(Double::sum, identity);
+
+        IntStream.rangeClosed(0, 5)
+                .asDoubleStream()
+                .forEach(accumulator::accumulate);
+
+        long expected = 0L;
+        for (int index = 0; index <= 5; index++) {
+            expected += index;
+        }
+
+        assertThat(accumulator.get()).as("The sum should be equals the expected").isEqualTo(expected);
+    }
+
+    @Test
     void equivalentCallsForLong() {
         LongAdder adder = new LongAdder();
 //        LongAccumulator accumulator = new LongAccumulator(Long::sum, 0L); // Same as below
@@ -123,7 +151,6 @@ class MyAccumulatorTest implements WithAssertions {
     @DisplayName("Double accumulator")
     @EnabledOnOs(OS.MAC)
     void doubleAccumulator() {
-        //https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/atomic/DoubleAccumulator.html
         DoubleAdder doubleAdder = new DoubleAdder();
         final Double[] myDouble = {0d};
 
