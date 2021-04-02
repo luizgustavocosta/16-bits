@@ -7,15 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
+import java.util.IntSummaryStatistics;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.DoubleAccumulator;
-import java.util.concurrent.atomic.DoubleAdder;
-import java.util.concurrent.atomic.LongAccumulator;
+import java.util.concurrent.atomic.*;
 import java.util.function.LongBinaryOperator;
+import java.util.function.LongFunction;
 import java.util.function.LongToDoubleFunction;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,12 +75,48 @@ class MyAccumulatorTest implements WithAssertions {
         assertEquals(10, apply);
 
         //LongAccumulator accumulator = new LongAccumulator(binaryOperator, 0L);
-
         LongAccumulator longAccumulator = new LongAccumulator(Long::sum, identity);
         LongStream.rangeClosed(1, 10)
                 .forEach(longAccumulator::accumulate);
 
         assertEquals(55, longAccumulator.get());
+    }
+
+    @Test
+    void equivalentCallsForLong() {
+        LongAdder adder = new LongAdder();
+//        LongAccumulator accumulator = new LongAccumulator(Long::sum, 0L); // Same as below
+        LongAccumulator accumulator = new LongAccumulator((number, otherNumber) -> number + otherNumber, 0L);
+        assertThat(adder.longValue()).as("They are equivalents").isEqualTo(accumulator.longValue());
+    }
+
+    @Test
+    void equivalentCallsForDouble() {
+        DoubleAdder adder = new DoubleAdder();
+//        DoubleAccumulator accumulator = new DoubleAccumulator(Double::sum, 0L); // Same as below
+        DoubleAccumulator accumulator = new DoubleAccumulator((number, otherNumber) -> number + otherNumber, 0L);
+        assertThat(adder.doubleValue()).as("They are equivalents").isEqualTo(accumulator.doubleValue());
+    }
+
+    @Test
+    void sumUsingStream() {
+        int start = 0, end = 5;
+        final int sumOfInt = IntStream.rangeClosed(start, end).sum();
+        final Long sumAsLong = IntStream.rangeClosed(start, end).mapToLong(number -> number).sum();
+        final Integer summingInt = IntStream.rangeClosed(start, end).boxed().collect(Collectors.summingInt(Integer::intValue));
+        final Integer sameAsAbove = IntStream.rangeClosed(start, end).boxed().mapToInt(Integer::intValue).sum();
+        LongBinaryOperator operator = Long::sum;
+        final Long usingLongBinaryOperator = IntStream.rangeClosed(start, end).asLongStream()
+                .reduce(0L, operator);//Long::sum
+
+        final int expected = 15;
+        assertAll(() -> {
+            assertThat(expected).as("Sum").isEqualTo(sumOfInt);
+            assertThat(expected).as("Map to Long and sum").isEqualTo(sumAsLong.intValue());
+            assertThat(expected).as("Summing Int").isEqualTo(summingInt);
+            assertThat(expected).as("Map to Int and sum").isEqualTo(sameAsAbove);
+            assertThat(expected).as("Binary operator").isEqualTo(usingLongBinaryOperator.intValue());
+        });
     }
 
     @RepeatedTest(1)
