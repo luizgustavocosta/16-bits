@@ -111,6 +111,42 @@ class MyAccumulatorTest implements WithAssertions {
     }
 
     @Test
+    @DisplayName("Long .: Accumulator x Adder :D")
+    void differenceBetweenAccumulatorAndAdder() {
+        final long zero = 0L;
+
+        LongAdder adder = new LongAdder();
+        LongAccumulator accumulator = new LongAccumulator(Long::sum, zero);
+
+        //LongAccumulator is a more generalized version of LongAdder
+        long universeNumber = 42L;
+        accumulator.accumulate(universeNumber);
+        adder.add(universeNumber);
+
+        // Get the value
+        assertEquals(accumulator.get(), adder.longValue());
+
+        //Primitives
+        assertEquals(accumulator.intValue(), adder.intValue());
+        assertEquals(accumulator.floatValue(), adder.floatValue());
+        assertEquals(accumulator.longValue(), adder.longValue());
+        assertEquals(accumulator.doubleValue(), adder.doubleValue());
+
+        // Decrement ony on Adder
+        adder.decrement();
+        assertNotEquals(adder.longValue(), accumulator.get());
+
+        // Reset
+        accumulator.reset();
+        adder.reset();
+        assertAll(() -> {
+            assertEquals(zero, accumulator.get());
+            assertEquals(zero, adder.longValue());
+            assertEquals(accumulator.get(), adder.longValue());
+        });
+    }
+
+    @Test
     void equivalentCallsForLong() {
         LongAdder adder = new LongAdder();
 //        LongAccumulator accumulator = new LongAccumulator(Long::sum, 0L); // Same as below
