@@ -56,19 +56,6 @@ jobs:
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: allure-history
 
-
-    - name: Cobertura
-      if: always()
-      run: mvn cobertura:cobertura
-      continue-on-error: true
-
-    - uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        flags: unittests # optional
-        name: codecov-umbrella # optional
-        fail_ci_if_error: false # optional (default = false)
-
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:

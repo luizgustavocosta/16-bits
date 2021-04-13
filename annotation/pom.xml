@@ -12,5 +12,30 @@
 
     <artifactId>annotation</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.16bits</groupId>
+            <artifactId>annotation-processor</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessors>
+                        <annotationProcessor>com.bits16.tech.annotation.processor.numbers.MethodProcessor</annotationProcessor>
+                        <annotationProcessor>com.bits16.tech.annotation.processor.type.SampleProcessor</annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
