@@ -28,8 +28,6 @@
     <modules>
         <module>base</module>
         <module>grpc</module>
-        <module>annotation</module>
-        <module>annotation-processor</module>
     </modules>
 
     <distributionManagement>
