@@ -16,6 +16,7 @@ Is expected the following behaviors
 2. Print a message using Log api
 3. Print a message using a REST service using Spring
 4. Print a message using a REST service using Quarkus
+5. Silly command
 
 ### Docker Hub
 All images made so far are there.
