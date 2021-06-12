@@ -10,7 +10,6 @@
         <version>0.0.3-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.16bits</groupId>
     <artifactId>grpc</artifactId>
 
     <dependencies>
