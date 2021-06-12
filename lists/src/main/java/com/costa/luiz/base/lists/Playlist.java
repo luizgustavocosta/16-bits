@@ -1,48 +1,18 @@
 package com.costa.luiz.base.lists;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Builder
+@Getter
+@Setter
 public class Playlist {
 
     private final String name;
     private final List<Music> musics;
+    private List<Podcast> podcasts;
 
-    public Playlist(String name, List<Music> musics) {
-        this.name = name;
-        this.musics = musics;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Music> getMusics() {
-        return musics;
-    }
-
-
-}
-
-class Music {
-    private final String name;
-    private final String album;
-    private final String country;
-
-    Music(String name, String album, String country) {
-        this.name = name;
-        this.album = album;
-        this.country = country;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public String getCountry() {
-        return country;
-    }
 }
