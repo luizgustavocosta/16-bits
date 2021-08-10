@@ -29,6 +29,8 @@
         <module>base</module>
         <module>grpc</module>
         <module>lists</module>
+        <module>collections</module>
+        <module>generics</module>
     </modules>
 
     <distributionManagement>
@@ -85,6 +87,16 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-junit5</artifactId>
                 <version>${allure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.20</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
