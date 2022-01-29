@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -63,7 +62,6 @@ class TradeServiceTest {
 
     @Test
     void asyncBuy() {
-        // Given
         double magicNumber = 42d;
         BigDecimal value = BigDecimal.TEN;
 
@@ -74,11 +72,9 @@ class TradeServiceTest {
 
         doReturn(stockBought).when(repository).buy(stock, offer);
 
-        // When
         Offer asyncStock = tradeService.asyncBuy(stock, offer);
 
-        // Then
-        verify(repository, timeout(100).times(1)).buy(stock, offer);
+        verify(repository, times(1)).buy(stock, offer);
         Assertions.assertAll(() -> {
             Assertions.assertEquals(stockBought.getAmount(), asyncStock.getAmount());
             Assertions.assertEquals(stockBought.getValue(), asyncStock.getValue());
