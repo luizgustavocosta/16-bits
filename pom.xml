@@ -31,6 +31,7 @@
         <module>lists</module>
         <module>collections</module>
         <module>generics</module>
+        <module>retry-policy</module>
     </modules>
 
     <distributionManagement>

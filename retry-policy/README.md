@@ -1,0 +1,1 @@
+https://failsafe.dev/circuit-breaker/
