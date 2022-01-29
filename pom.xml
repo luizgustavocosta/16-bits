@@ -32,6 +32,8 @@
         <module>collections</module>
         <module>generics</module>
         <module>retry-policy</module>
+        <module>argument-captor</module>
+        <module>file</module>
     </modules>
 
     <distributionManagement>
